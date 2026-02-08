@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 class Main {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         ArrayList<String> filePath = new ArrayList<>();
         ArrayList<String> flags = new ArrayList<>();
         String prefix = "";
