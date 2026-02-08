@@ -1,23 +1,23 @@
 package org.example;
+
 import java.io.*;
 import java.util.ArrayList;
 
-class Main{
+class Main {
     static void main(String[] args) {
-        System.out.println(" ");
         ArrayList<String> filePath = new ArrayList<>();
         ArrayList<String> flags = new ArrayList<>();
         String prefix = "";
         String pathOut = "";
 
         int i = 0;
-        while(i < args.length){
+        while (i < args.length) {
             String arg = args[i];
-            if (arg.endsWith(".txt")){
+            if (arg.endsWith(".txt")) {
                 filePath.add(arg);
-            } else if (arg.startsWith("-")){
+            } else if (arg.startsWith("-")) {
                 flags.add(arg);
-            } else if (arg.endsWith("-")){
+            } else if (arg.endsWith("-")) {
                 prefix = arg;
             } else {
                 pathOut = arg;

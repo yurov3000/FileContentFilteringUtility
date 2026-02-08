@@ -15,12 +15,12 @@ public class ClassifierData {
     private long sumI = 0;
 
     public void readAndSortData(ArrayList<String> filePath, ArrayList<String> flags, String pathOut, String prefix) {
-        for(String file : filePath){
-            try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+        for (String file : filePath) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line;
-                while((line = br.readLine()) != null){
-                    try{
-                        long num = Integer.parseInt(line);
+                while ((line = br.readLine()) != null) {
+                    try {
+                        long num = Long.parseLong(line);
                         intArr.add(num);
                         countObjectsInt++;
                         sumI += num;
@@ -30,82 +30,82 @@ public class ClassifierData {
                             doubleArr.add(num);
                             countObjectsFloat++;
                             sumD += num;
-                        } catch (NumberFormatException e2){
+                        } catch (NumberFormatException e2) {
                             strArr.add(line);
                             countObjectsStr++;
                         }
                     }
                 }
-            } catch (IOException ex){
+            } catch (IOException ex) {
                 System.out.println(ex.getMessage());
             }
         }
         saveData(flags, pathOut, prefix);
     }
 
-    private void saveData(ArrayList<String> flags, String pathOut, String prefix){
+    private void saveData(ArrayList<String> flags, String pathOut, String prefix) {
         StringBuilder path = new StringBuilder();
         boolean rewrite = false;
-        for(String flag : flags){
-            if(flag.equals("-p")){
+        for (String flag : flags) {
+            if (flag.equals("-p")) {
                 rewrite = true;
             }
-            if(flag.equals("-a")){
+            if (flag.equals("-a")) {
                 path.insert(0, prefix);
             }
-            if(flag.equals("-o")){
-                if(pathOut.equals("")){
+            if (flag.equals("-o")) {
+                if (pathOut.equals("")) {
                     path.insert(0, pathOut);
-                }else{
+                } else {
                     path.insert(0, pathOut + "\\");
                 }
 
             }
-            if(flag.equals("-s") || flag.equals("-f")){
+            if (flag.equals("-s") || flag.equals("-f")) {
                 printStat(flags);
             }
         }
 
-        try (FileWriter writer = new FileWriter(path + "string.txt", rewrite)){
-            for (String str : strArr){
+        try (FileWriter writer = new FileWriter(path + "string.txt", rewrite)) {
+            for (String str : strArr) {
                 writer.write(str + "\n");
                 writer.flush();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
 
-        try (FileWriter writer = new FileWriter(path + "integer.txt", rewrite)){
-            for (Long integer : intArr){
+        try (FileWriter writer = new FileWriter(path + "integer.txt", rewrite)) {
+            for (Long integer : intArr) {
                 writer.write(integer + "\n");
                 writer.flush();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
 
-        try (FileWriter writer = new FileWriter(path + "float.txt", rewrite)){
-            for (Double doubleNum : doubleArr){
+        try (FileWriter writer = new FileWriter(path + "float.txt", rewrite)) {
+            for (Double doubleNum : doubleArr) {
                 writer.write(doubleNum + "\n");
                 writer.flush();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    public void printStat(ArrayList<String> flags){
-        for(String flag : flags){
-            if(flag.equals("-s")){
+    public void printStat(ArrayList<String> flags) {
+        for (String flag : flags) {
+            if (flag.equals("-s")) {
                 System.out.println("\nКраткая статистика:");
                 System.out.println("Количество элементов типа String: " + countObjectsStr);
                 System.out.println("Количество элементов типа Int: " + countObjectsInt);
                 System.out.println("Количество элементов типа Float: " + countObjectsFloat + "\n");
             }
-            if(flag.equals("-f")){
+            if (flag.equals("-f")) {
                 System.out.println("\nПолная статистика:");
                 System.out.println("Количество элементов типа String: " + countObjectsStr);
-                if(!strArr.isEmpty()){
+                if (!strArr.isEmpty()) {
                     String shortest = strArr.getFirst();
                     String longest = strArr.getFirst();
 
@@ -122,37 +122,21 @@ public class ClassifierData {
                 }
 
                 System.out.println("Количество элементов типа Int: " + countObjectsInt);
-                if(!intArr.isEmpty()){
-                    System.out.println("Минимальное: " + Collections.min(intArr) + "\nМаксимальное: "+ Collections.max(intArr));
+                if (!intArr.isEmpty()) {
+                    System.out.println("Минимальное: " + Collections.min(intArr) + "\nМаксимальное: " + Collections.max(intArr));
                     System.out.println("Cумма всех элементов: " + sumI);
                     System.out.println("Среднее значение по всем данным: " + (sumI / intArr.size()) + "\n");
                 }
 
                 System.out.println("Количество элементов типа Float: " + countObjectsFloat);
-                if(!doubleArr.isEmpty()){
-                    System.out.println("Минимальное: " + Collections.min(doubleArr) + "\nМаксимальное: "+ Collections.max(doubleArr));
+                if (!doubleArr.isEmpty()) {
+                    System.out.println("Минимальное: " + Collections.min(doubleArr) + "\nМаксимальное: " + Collections.max(doubleArr));
                     System.out.println("Cумма всех элементов: " + sumD);
                     System.out.println("Среднее значение по всем данным: " + (sumD / doubleArr.size()) + "\n");
                 }
 
             }
         }
-
-    }
-
-    public void printArrays(){
-        System.out.println(" ");
-        for(long x : intArr){
-            System.out.print(x + " ");
-        }
-        System.out.println(" ");
-        for(double x : doubleArr){
-            System.out.print(x + " ");
-        }
-        System.out.println(" ");
-        for(String x : strArr){
-            System.out.print(x + " ");
-        }
-        System.out.println(" ");
     }
 }
+
